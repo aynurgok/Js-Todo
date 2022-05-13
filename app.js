@@ -2,6 +2,7 @@
 const todoInput=document.querySelector(".todo-input");
 const todoButton=document.querySelector(".todo-button");
 const todoList=document.querySelector(".todo-list");
+const cardBody=document.querySelector(".card-body")
 
 
 //event listenerlar
@@ -13,13 +14,17 @@ document.addEventListener("DOMContentLoaded", getTodos);
 
 function addTodo(event) {
     
-    event.preventDefault();
-    
     const todoDiv = document.createElement("div");
     todoDiv.classList.add("todo");
    
     const newTodo = document.createElement("li");
     newTodo.innerText = todoInput.value;
+
+    if(todoInput.value === "") {
+      showAlert("danger","Lütfen bir todo giriniz")
+    }
+    
+    
    
     saveLocalStorage(todoInput.value);
     
@@ -38,7 +43,9 @@ function addTodo(event) {
     todoDiv.appendChild(trashButton);
   
     todoList.appendChild(todoDiv);
+    event.preventDefault();
   }
+
 function deleteCheck(e) {
     const item = e.target;
 
@@ -50,6 +57,17 @@ function deleteCheck(e) {
     if(item.classList[0] === 'complete-btn') {
         const todo = item.parentElement.classList.toggle("completed");
     }
+}
+
+function showAlert(type,message) {
+  const alert=document.createElement("div")
+  alert.className="alert alert-danger"
+  alert.textContent="Lütfen bir todo giriniz"
+  cardBody.appendChild(alert)
+
+  setTimeout(function(){
+      alert.remove()
+  },500)
 }
 
 
@@ -99,6 +117,8 @@ function saveLocalStorage(todo) {
   }
 
 
+
+  
 //Bildirimler eklenmedi
 
 
